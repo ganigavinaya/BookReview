@@ -10,6 +10,7 @@ import {FormsModule} from '@angular/forms';
 import {UserService} from './services/user.service';
 import {HttpModule} from '@angular/http';
 import {HomeComponent} from './home/home.component';
+import {AuthGuard} from './guard/auth.guard';
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import {HomeComponent} from './home/home.component';
     HttpModule,
     FormsModule
   ],
-  providers: [UserService],
+  providers: [UserService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

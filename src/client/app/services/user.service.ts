@@ -27,4 +27,26 @@ export class UserService {
   deleteUser(_id: string) {
     return this.http.delete('/users/' + _id);
   }
+
+  login(username: string, password: string) {
+    console.log(username + ' ' + password);
+    return this.http.post(this.userPrefix + '/users/authenticate', { username: username, password: password })
+      .map((response: Response) => {
+        // login successful if there's a jwt token in the response
+        const user = response.json();
+        if (user && user.token) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          localStorage.setItem('currentUser', JSON.stringify(user));
+        }
+
+        return user;
+      });
+  }
+
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+  }
+
+
 }
