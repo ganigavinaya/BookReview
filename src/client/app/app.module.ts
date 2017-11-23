@@ -10,6 +10,7 @@ import {FormsModule} from '@angular/forms';
 import {UserService} from './services/user.service';
 import {HttpModule} from '@angular/http';
 import {HomeComponent} from './home/home.component';
+import {HomeHeaderComponent} from './home/home-header/home-header.component';
 import {AuthGuard} from './guard/auth.guard';
 
 
@@ -18,7 +19,8 @@ import {AuthGuard} from './guard/auth.guard';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    HomeHeaderComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,18 @@
+#outer {
+  height: 320px;
+}
+h1{
+  color:#cccc;
+  font-size: 400%;
+  margin-top: 50px;
+}
+.bg-overlay {
+  background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), url("../img/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  color: #fff;
+  height: 450px;
+  padding-top: 50px;
+  width:100%;
+}
