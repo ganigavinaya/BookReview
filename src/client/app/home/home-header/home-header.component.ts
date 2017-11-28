@@ -23,4 +23,12 @@ export class HomeHeaderComponent {
     this.router.navigate(['/login']);
   }
 
+  checkUserName() {
+
+    if (JSON.parse(localStorage.getItem('currentUser')).username === 'admin') {
+      return true;
+    }
+    return false;
+  }
+
 }

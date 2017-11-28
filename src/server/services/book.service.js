@@ -4,16 +4,19 @@ var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var Q = require('q');
 var mongo = require('mongoskin');
+var fs = require('fs');
+var randomstring = require("randomstring");
 var db = mongo.db(config.connectionString, {native_parser: true});
 db.bind('books');
 
 var service = {};
 
 service.getAll = getAll;
-service.getById = getById;
+service.getByTitle = getByTitle;
 service.create = create;
 service.update = update;
 service.delete = _delete;
+service.getById = getById;
 
 module.exports = service;
 
@@ -21,21 +24,26 @@ module.exports = service;
 function getAll() {
   var deferred = Q.defer();
 
-  db.books.find().toArray(function (err, book) {
+  db.books.find().toArray(function (err, books) {
     if (err) deferred.reject(err.name + ': ' + err.message);
-    if (book) {
-      deferred.resolve(_);
-    }
-    deferred.resolve(_);
+
+    // return users (without hashed passwords)
+    books = _.map(books, function (book) {
+      return _.omit(book, 'hash');
+    });
+
+    deferred.resolve(books);
   });
 
   return deferred.promise;
 }
 
-function getById(_id) {
+function getByTitle(_title) {
   var deferred = Q.defer();
 
-  db.books.findById(_id, function (err, book) {
+  db.books.findOne(
+    {title: _title}
+    , function (err, book) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
     if (book) {
@@ -48,12 +56,52 @@ function getById(_id) {
   return deferred.promise;
 }
 
-function create(bookParam) {
+function getById(_id) {
+
+  console.log(_id);
   var deferred = Q.defer();
+
+  db.books.findById(_id, function (err, book) {
+    if (err) deferred.reject(err.name + ': ' + err.message);
+
+    if (book) {
+      console.log(_.omit(book, 'hash'));
+      // return user (without hashed password)
+      deferred.resolve(_.omit(book, 'hash'));
+    } else {
+      // user not found
+      console.log("error");
+      deferred.resolve();
+    }
+  });
+
+  return deferred.promise;
+}
+
+
+function create(bookParam) {
+    var deferred = Q.defer();
+
+    // var imageName = "../img/"+randomstring.generate(7);
+    // var bitmap = new Buffer(bookParam.image, 'base64');
+    // fs.writeFile(imageName,bitmap,'binary', function(err){
+    //   if (err) throw err
+    //   console.log('File saved.')
+    // });
+
+    var set = {
+      title: bookParam.title,
+      authors: bookParam.authors,
+      genre: bookParam.genre,
+      desc:bookParam.desc
+      //imageName: bookParam.imageName
+    };
+
+    console.log(bookParam);
 
 
     db.books.insert(
-      bookParam,
+      set,
       function (err, doc) {
         if (err) deferred.reject(err.name + ': ' + err.message);
 
@@ -66,14 +114,32 @@ function create(bookParam) {
 
 function update(_id, bookParam) {
   var deferred = Q.defer();
+  var set;
+  if(bookParam.imageName != undefined){
+    var imageName = '../img/'+randomstring.generate(7);
+    fs.writeFile(imageName,bookParam.image,'binary', function(err){
+      if (err) throw err
+      console.log('File saved.')
+    });
 
-  // fields to update
-  var set = {
-    name: bookParam.name,
-    desc: bookParam.desc,
-    author: bookParam.author,
-    genre: bookParam.genre
-  };
+    set = {
+      title: bookParam.title,
+      authors: bookParam.authors,
+      genre: bookParam.genre,
+      imagePath: bookParam.imagePath,
+      imageName:imageName
+    };
+  }
+  else{
+
+    set = {
+      title: bookParam.title,
+      authors: bookParam.authors,
+      genre: bookParam.genre
+    };
+
+  }
+
 
 
   db.books.update(

@@ -15,6 +15,12 @@ import {AuthGuard} from './guard/auth.guard';
 import {DropdownDirective} from './directives/dropdown.directive';
 import {AddBookComponent} from './home/add-book/add-book.component';
 import {BookListComponent} from './home/book-list/book-list.component';
+import { ImageUploadModule } from 'angular2-image-upload';
+import {BookService} from './services/book.service';
+import {BookComponent} from './home/book-list/book/book.component';
+import {StarRatingModule} from '../../../node_modules/angular-star-rating';
+import {BookReviewComponent} from './home/book-review-detail/book-review.component';
+import {UserBookService} from './services/user-book.service';
 
 
 @NgModule({
@@ -26,15 +32,19 @@ import {BookListComponent} from './home/book-list/book-list.component';
     HomeHeaderComponent,
     DropdownDirective,
     AddBookComponent,
-    BookListComponent
+    BookListComponent,
+    BookComponent,
+    BookReviewComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    ImageUploadModule.forRoot(),
+    StarRatingModule.forRoot()
   ],
-  providers: [UserService, AuthGuard],
+  providers: [UserService, AuthGuard, BookService, UserBookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

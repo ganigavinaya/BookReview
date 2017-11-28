@@ -8,9 +8,9 @@
 
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a (click)="onSelect('recipe')">Home</a></li>
-          <li><a (click)="onSelect('shopping-list')">Search</a></li>
-          <li><a routerLink="/home/addBook">Add Book</a></li>
+          <li><a>Home</a></li>
+          <li><a>Search</a></li>
+          <li *ngIf="checkUserName()"><a routerLink="/home/addBook">Add Book</a></li>
         </ul>
         <div class="col-sm-3 col-md-3">
           <form class="navbar-form" role="search">

@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private userservice: UserService,) { }
+    private userservice: UserService) { }
 
   ngOnInit() {
     // reset login status

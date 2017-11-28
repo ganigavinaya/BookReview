@@ -6,6 +6,7 @@ import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './guard/auth.guard';
 import {AddBookComponent} from "./home/add-book/add-book.component";
 import {BookListComponent} from "./home/book-list/book-list.component";
+import {BookReviewComponent} from "./home/book-review-detail/book-review.component";
 
 const appRoutes: Routes = [
   {
@@ -20,7 +21,8 @@ const appRoutes: Routes = [
   {
     path: 'home', component: HomeComponent, canActivate: [AuthGuard], children: [
       { path: '', component: BookListComponent },
-      { path: 'addBook', component: AddBookComponent }
+      { path: 'addBook', component: AddBookComponent },
+      { path: 'book/:id', component: BookReviewComponent }
     ]
   },
   {
