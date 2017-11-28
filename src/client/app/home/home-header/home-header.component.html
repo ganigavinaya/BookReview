@@ -1,4 +1,28 @@
+
 <div id="outer" class="bg-overlay">
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">Book Review</a>
+      </div>
+
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a (click)="onSelect('recipe')">Home</a></li>
+          <li><input type="text" ><a (click)="onSelect('shopping-list')">Search</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown" appDropdown>
+            <a class="dropdown-toggle" role="button">User Name<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a >My Favorites</a></li>
+              <li><a (click)="logout()">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <div class="row">
     <div class="col-xs-12">
       <div class="col xs-6 col-sm-offset-3">

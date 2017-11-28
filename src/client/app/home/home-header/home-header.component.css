@@ -13,6 +13,14 @@ h1{
   background-position: center center;
   color: #fff;
   height: 450px;
-  padding-top: 50px;
   width:100%;
+}
+
+a {
+  cursor: pointer;
+}
+
+.navcolor{
+  background-color: #343a40!important;
+  color: #fff!important;
 }

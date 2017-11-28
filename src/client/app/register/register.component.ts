@@ -3,8 +3,6 @@ import {Router} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {User} from '../models/user';
 
-declare var jquery: any;
-declare var $: any;
 
 @Component({
   selector: 'app-register',
@@ -12,21 +10,29 @@ declare var $: any;
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  userdata: any = {};
+  userdata: User = {_id : '', name: '', email: '', username: '', password: ''};
 
   constructor(private router: Router,
               private userService: UserService) { }
 
   register() {
-    this.userService.createUser(this.userdata)
-      .subscribe(
-        data => {
-          this.router.navigate(['/home']);
-        },
-        error => {
-          console.log(error);
-        });
-  }
+    if (this.userdata.email === '' || this.userdata.name === '' || this.userdata.username === '' || this.userdata.password === '') {
+      document.getElementById('error').innerText = 'Enter all fields!';
+      return false;
+    }
 
+
+      this.userService.createUser(this.userdata)
+        .subscribe(
+          data => {
+            this.router.navigate(['/home']);
+          },
+          error => {
+            document.getElementById('error').innerText = error;
+            console.log('registration error here');
+          });
+
+
+  }
 
 }

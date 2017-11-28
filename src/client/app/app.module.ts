@@ -12,6 +12,7 @@ import {HttpModule} from '@angular/http';
 import {HomeComponent} from './home/home.component';
 import {HomeHeaderComponent} from './home/home-header/home-header.component';
 import {AuthGuard} from './guard/auth.guard';
+import {DropdownDirective} from './directives/dropdown.directive';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {AuthGuard} from './guard/auth.guard';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    HomeHeaderComponent
+    HomeHeaderComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
