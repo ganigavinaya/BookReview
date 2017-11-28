@@ -13,6 +13,8 @@ import {HomeComponent} from './home/home.component';
 import {HomeHeaderComponent} from './home/home-header/home-header.component';
 import {AuthGuard} from './guard/auth.guard';
 import {DropdownDirective} from './directives/dropdown.directive';
+import {AddBookComponent} from './home/add-book/add-book.component';
+import {BookListComponent} from './home/book-list/book-list.component';
 
 
 @NgModule({
@@ -22,7 +24,9 @@ import {DropdownDirective} from './directives/dropdown.directive';
     RegisterComponent,
     HomeComponent,
     HomeHeaderComponent,
-    DropdownDirective
+    DropdownDirective,
+    AddBookComponent,
+    BookListComponent
   ],
   imports: [
     BrowserModule,

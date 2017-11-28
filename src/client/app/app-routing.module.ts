@@ -4,6 +4,8 @@ import {RegisterComponent} from './register/register.component';
 import {NgModule} from '@angular/core';
 import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './guard/auth.guard';
+import {AddBookComponent} from "./home/add-book/add-book.component";
+import {BookListComponent} from "./home/book-list/book-list.component";
 
 const appRoutes: Routes = [
   {
@@ -16,8 +18,15 @@ const appRoutes: Routes = [
     path: 'register', component: RegisterComponent
   },
   {
-    path: 'home', component: HomeComponent, canActivate: [AuthGuard]
+    path: 'home', component: HomeComponent, canActivate: [AuthGuard], children: [
+      { path: '', component: BookListComponent },
+      { path: 'addBook', component: AddBookComponent }
+    ]
+  },
+  {
+    path: 'addBook', component: AddBookComponent, canActivate: [AuthGuard]
   }
+
 ];
 
 @NgModule({

@@ -28,7 +28,7 @@ export class RegisterComponent {
             this.router.navigate(['/home']);
           },
           error => {
-            document.getElementById('error').innerText = error;
+            document.getElementById('error').innerText = 'Username/ email already exists';
             console.log('registration error here');
           });
 
