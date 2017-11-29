@@ -12,6 +12,12 @@ export class BookListComponent implements OnInit {
 
   booklist: Book[];
   search = '';
+  newArray: Book[];
+  currentPage = 0;
+  pageSize = 1;
+  numberOfPages = 1;
+  nextDis = false;
+  prevDis = false;
   constructor (private route: ActivatedRoute,
                private router: Router,
                private bookservice: BookService) {}
@@ -24,6 +30,8 @@ export class BookListComponent implements OnInit {
           console.log('Success');
           this.booklist = data;
           console.log(this.booklist);
+          this.numberOfPages = this.calculateNumberOfPages();
+          this.startFrom();
         },
         error => {
           console.log(error);
@@ -37,12 +45,13 @@ export class BookListComponent implements OnInit {
           console.log('Success');
           this.booklist = data;
           console.log(this.booklist);
+          this.numberOfPages = this.calculateNumberOfPages();
         },
         error => {
           console.log(error);
         });
   }
-
+  
   onSearch() {
     // this.bookservice.searchBook(this.search)
     //   .subscribe(
@@ -67,4 +76,35 @@ export class BookListComponent implements OnInit {
         });
   }
 
+  calculateNumberOfPages() {
+    return Math.ceil(this.booklist.length / this.pageSize);
+  }
+
+  decreaseCurrentPage() {
+    if (this.currentPage <= 1) {
+      this.prevDis = true;
+    } else {
+      this.nextDis = false;
+      this.currentPage = this.currentPage - 1;
+
+      this.startFrom();
+    }
+  }
+
+  increaseCurrentPage() {
+    if (this.currentPage >= this.numberOfPages - 1) {
+      this.nextDis = true;
+    } else {
+      this.prevDis = false;
+      this.currentPage = this.currentPage + 1;
+
+      this.startFrom();
+    }
+  }
+
+  startFrom() {
+    const temp = this.pageSize * this.currentPage;
+    this.newArray = this.booklist.slice(this.pageSize * this.currentPage, this.pageSize + temp);
+    console.log(this.newArray.length);
+  }
 }

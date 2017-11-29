@@ -17,6 +17,16 @@
 <hr>
 <br>
 <div class="row">
+<app-book *ngFor="let book of newArray" [book]="book" (bookDeleted)="reloadData()"></app-book>
+<div class="Button" align="center">
+  <button [disabled] = "prevDis" id="prev" name ="prev" (click) = "decreaseCurrentPage()">
+    Previous
+  </button>
+  {{currentPage + 1}} / {{numberOfPages}}
+  <button [disabled] = "nextDis" id="next" name="next" (click) = "increaseCurrentPage()">
+    Next
+  </button>
+</div>
   <app-book *ngFor="let book of booklist" [book]="book" (bookDeleted)="reloadData()"></app-book>
 </div>
 
