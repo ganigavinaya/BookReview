@@ -33,7 +33,7 @@ export class BookService {
   }
 
   searchBook(_search: string) {
-    return this.http.get(this.bookPrefix + '/books/searchBook').map((response: Response) => response.json());
+    return this.http.get(this.bookPrefix + '/books/searchBook?search=' + _search).map((response: Response) => response.json());
   }
 
 }

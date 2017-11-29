@@ -9,8 +9,9 @@ router.get('/', getAll);
 router.put('/:_id', update);
 router.delete('/:_id', _delete);
 router.get('/title:_title', getByTitle);
-router.get('/:_id', getById);
 router.get('/searchBook', searchBook);
+router.get('/:_id', getById);
+
 
 module.exports = router;
 

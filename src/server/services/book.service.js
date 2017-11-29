@@ -58,7 +58,7 @@ function getByTitle(_title) {
 }
 
 function getById(_id) {
-  console.log("triggered uuuu");
+
   var deferred = Q.defer();
 
   db.books.findById(_id, function (err, book) {
@@ -68,7 +68,6 @@ function getById(_id) {
 
       deferred.resolve(_.omit(book, 'hash'));
     } else {
-      console.log("error uuuu");
       deferred.resolve("book not found");
     }
   });
@@ -80,17 +79,22 @@ function searchBook(req) {
 
   var deferred = Q.defer();
 
-  db.books.find(
-      {title:/Little/}
-      , function (err, book) {
-      if (err) deferred.reject(err.name + ': ' + err.message);
+  word = req.param('search');
+  db.books.find({$or:
+    [
+      {title: {'$regex': word}},
+      {authors: {'$regex': word}},
+      {genre: {'$regex': word}}
+    ]})
+    .toArray(function (err, books) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
 
 
-      books = _.map(books, function (book) {
-        return book;
-      });
+        books = _.map(books, function (book) {
+          return book;
+        });
 
-      deferred.resolve(books);
+        deferred.resolve(books);
   });
 
   return deferred.promise;

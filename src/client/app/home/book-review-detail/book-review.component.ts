@@ -15,6 +15,7 @@ import {AllReviewComponent} from './all-review/all-review.component';
 export class BookReviewComponent implements OnInit {
 
   book: Book;
+  favorite: boolean;
   reviewInst: UserBook;
   @ViewChild(AllReviewComponent)
   private allreview: AllReviewComponent;
@@ -53,6 +54,16 @@ export class BookReviewComponent implements OnInit {
         console.log('error');
       }
     );
+
+    // this.favservice.getOneForUser(this.reviewInst.userId, this.reviewInst.bookId).subscribe(
+    //   data => {
+    //     this.favorite = true;
+    //   },
+    //   error => {
+    //     this.favorite = true;
+    //     console.log('error');
+    //   }
+    // );
   }
 
 

@@ -25,6 +25,7 @@ import {AllReviewComponent} from './home/book-review-detail/all-review/all-revie
 import {SingleReviewComponent} from './home/book-review-detail/all-review/single-review/single-review.component';
 import {PasswordStrengthBarModule} from 'ng2-password-strength-bar';
 import {FavoriteComponent} from "./home/favorites/favorite.component";
+import {FavService} from "./services/fav.service";
 
 
 @NgModule({

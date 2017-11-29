@@ -4,16 +4,26 @@ var router = express.Router();
 var favService = require('services/fav.service.js');
 
 // routes
+router.get('/', getOneForUser);
+router.post('/add', setFav);
 router.get('/:_id', getAllForUser);
-router.post('/set', setFav);
 
 module.exports = router;
 
-
 function getAllForUser(req, res) {
   favService.getAllForUser(req.params._id)
-    .then(function (users) {
-      res.send(users);
+    .then(function (favs) {
+      res.send(favs);
+    })
+    .catch(function (err) {
+      res.status(400).send(err);
+    });
+}
+
+function getOneForUser(req, res) {
+  favService.getOneForUser(req)
+    .then(function (favs) {
+      res.send(favs);
     })
     .catch(function (err) {
       res.status(400).send(err);
@@ -22,7 +32,7 @@ function getAllForUser(req, res) {
 
 
 function setFav(req, res) {
-  favService.create(req.body)
+  favService.setFav(req.body)
     .then(function () {
       res.sendStatus(200);
     })
