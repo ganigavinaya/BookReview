@@ -21,8 +21,9 @@ import {BookComponent} from './home/book-list/book/book.component';
 import {StarRatingModule} from '../../../node_modules/angular-star-rating';
 import {BookReviewComponent} from './home/book-review-detail/book-review.component';
 import {UserBookService} from './services/user-book.service';
-import {AllReviewComponent} from "./home/book-review-detail/all-review/all-review.component";
-import {SingleReviewComponent} from "./home/book-review-detail/all-review/single-review/single-review.component";
+import {PasswordStrengthBarModule} from 'ng2-password-strength-bar'
+import {AllReviewComponent} from './home/book-review-detail/all-review/all-review.component';
+import {SingleReviewComponent} from './home/book-review-detail/all-review/single-review/single-review.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import {SingleReviewComponent} from "./home/book-review-detail/all-review/single
     FormsModule,
     ReactiveFormsModule,
     ImageUploadModule.forRoot(),
-    StarRatingModule.forRoot()
+    StarRatingModule.forRoot(),
+    PasswordStrengthBarModule
   ],
   providers: [FormBuilder, UserService, AuthGuard, BookService, UserBookService],
   bootstrap: [AppComponent]

@@ -27,7 +27,12 @@
             </div>
             <div class="form-group">
               <label class="sr-only" for="form-password">Password</label>
-              <input type="password" placeholder="Password..." class="form-password form-control" id="form-password" name="form-password" [(ngModel)]="userdata.password">
+              <input type="password" placeholder="Password..." class="form-password form-control" id="form-password" name="form-password" [(ngModel)]="userdata.password" #password="ngModel"
+                     minlength="5" maxlength="50" required>
+              <ng2-password-strength-bar
+                [passwordToCheck]="userdata.password"
+                [barLabel]="barLabel">
+              </ng2-password-strength-bar>
             </div>
             <div class="row">
               <div class="float-left col-xs-6">
