@@ -79,13 +79,6 @@ function getById(_id) {
 function create(bookParam) {
     var deferred = Q.defer();
 
-    // var imageName = "../img/"+randomstring.generate(7);
-    // var bitmap = new Buffer(bookParam.image, 'base64');
-    // fs.writeFile(imageName,bitmap,'binary', function(err){
-    //   if (err) throw err
-    //   console.log('File saved.')
-    // });
-
     var set = {
       title: bookParam.title,
       authors: bookParam.authors,
@@ -93,8 +86,6 @@ function create(bookParam) {
       desc:bookParam.desc,
       image: bookParam.image
     };
-
-    console.log(bookParam);
 
 
     db.books.insert(
@@ -112,32 +103,23 @@ function create(bookParam) {
 function update(_id, bookParam) {
   var deferred = Q.defer();
   var set;
-  if(bookParam.imageName != undefined){
-    var imageName = '../img/'+randomstring.generate(7);
-    fs.writeFile(imageName,bookParam.image,'binary', function(err){
-      if (err) throw err
-      console.log('File saved.')
-    });
 
-    set = {
-      title: bookParam.title,
-      authors: bookParam.authors,
-      genre: bookParam.genre,
-      imagePath: bookParam.imagePath,
-      imageName:imageName
-    };
-  }
-  else{
-
-    set = {
-      title: bookParam.title,
-      authors: bookParam.authors,
-      genre: bookParam.genre
-    };
-
-  }
-
-
+    if(bookParam.image==null){
+      set = {
+        title: bookParam.title,
+        authors: bookParam.authors,
+        genre: bookParam.genre,
+        desc:bookParam.desc
+      };
+    }
+    else
+      set = {
+        title: bookParam.title,
+        authors: bookParam.authors,
+        genre: bookParam.genre,
+        desc:bookParam.desc,
+        image: bookParam.image
+      };
 
   db.books.update(
     {_id: mongo.helper.toObjectID(_id)},

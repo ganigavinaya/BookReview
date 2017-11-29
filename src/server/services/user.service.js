@@ -26,6 +26,7 @@ function authenticate(username, password) {
 
     if (user && bcrypt.compareSync(password, user.hash)) {
       // authentication successful
+
       deferred.resolve({
         _id: user._id,
         username: user.username,
@@ -112,11 +113,13 @@ function create(userParam) {
 
 
   function createUser() {
-    // set user object to userParam without the cleartext password
-    var user = _.omit(userParam, 'password');
 
-    // add hashed password to user object
-    user.hash = bcrypt.hashSync(userParam.password, 10);
+    var user = {
+      name: userParam.name,
+      hash: bcrypt.hashSync(userParam.password, 10),
+      email: userParam.email,
+      username: userParam.username
+    };
 
     db.users.insert(
       user,
@@ -161,7 +164,7 @@ function update(_id, userParam) {
     var set = {
       firstName: userParam.firstName,
       lastName: userParam.lastName,
-      username: userParam.username,
+      username: userParam.username
     };
 
     // update password if it was entered

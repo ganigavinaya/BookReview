@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import {Http, RequestOptionsArgs, Response} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {UserBook} from '../models/user-book';
+import {ReviewRequest} from '../models/reviewRequest';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable()
 export class UserBookService {
@@ -12,8 +14,10 @@ export class UserBookService {
     return this.http.get(this.bookPrefix + '/userbook/' + _id).map((response: Response) => response.json());
   }
 
-  getBookUserReviews(_id: string) {
-    return this.http.get(this.bookPrefix + '/userbook/user/' + _id).map((response: Response) => response.json());
+  getBookUserReviews(req: ReviewRequest) {
+    const params = new HttpParams().set('bookId', req.bookId).set('userId', req.userId);
+    return this.http.get(this.bookPrefix + '/userbook/user?bookId=' + req.bookId + '&userId=' +  req.userId)
+      .map((response: Response) => response.json());
   }
 
   addReview(review: UserBook) {

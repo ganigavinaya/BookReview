@@ -21,6 +21,8 @@ import {BookComponent} from './home/book-list/book/book.component';
 import {StarRatingModule} from '../../../node_modules/angular-star-rating';
 import {BookReviewComponent} from './home/book-review-detail/book-review.component';
 import {UserBookService} from './services/user-book.service';
+import {AllReviewComponent} from "./home/book-review-detail/all-review/all-review.component";
+import {SingleReviewComponent} from "./home/book-review-detail/all-review/single-review/single-review.component";
 
 
 @NgModule({
@@ -34,7 +36,9 @@ import {UserBookService} from './services/user-book.service';
     AddBookComponent,
     BookListComponent,
     BookComponent,
-    BookReviewComponent
+    BookReviewComponent,
+    AllReviewComponent,
+    SingleReviewComponent
   ],
   imports: [
     BrowserModule,

@@ -28,7 +28,7 @@ function getAllReviewsForBook(_id) {
       if (err) deferred.reject(err.name + ': ' + err.message);
 
       reviews = _.map(reviews, function (review) {
-        return _.omit(review, 'hash');
+        return review;
       });
 
       deferred.resolve(reviews);
@@ -37,21 +37,24 @@ function getAllReviewsForBook(_id) {
 }
 
 
-function getBookUserReviews(_id) {
+function getBookUserReviews(req) {
   var deferred = Q.defer();
 
-  db.reviews.find(
+  db.reviews.findOne(
     {
-      userId:_id
+      bookId:req.param('bookId'),
+      userId:req.param('userId')
     }
-    , function (err, reviews) {
+    ,
+    function (err, review) {
       if (err) deferred.reject(err.name + ': ' + err.message);
 
-      reviews = _.map(reviews, function (review) {
-        return _.omit(review, 'hash');
-      });
 
-      deferred.resolve(reviews);
+      if (review) {
+        deferred.resolve(review);
+      } else {
+        deferred.reject('review not found');
+      }
     });
   return deferred.promise;
 }
@@ -63,12 +66,11 @@ function create(reviewParam) {
   var set = {
     bookId: reviewParam.bookId,
     userId: reviewParam.userId,
-    rating: reviewParam.rating,
+    //rating: reviewParam.rating,
     review: reviewParam.review
-    //imageName: bookParam.imageName
   };
 
-  db.books.insert(
+  db.reviews.insert(
     set,
     function (err, doc) {
       if (err) deferred.reject(err.name + ': ' + err.message);

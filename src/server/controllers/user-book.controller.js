@@ -5,7 +5,7 @@ var userBookService = require('services/user-book.service');
 
 // routes
 router.post('/add', add);
-router.get('/user/:_id', getBookUserReviews);
+router.get('/user', getBookUserReviews);
 router.get('/:_id', getAllReviewsForBook);
 
 module.exports = router;
@@ -22,21 +22,25 @@ function add(req, res) {
 
 function getAllReviewsForBook(req, res) {
   userBookService.getAllReviewsForBook(req.params._id)
-    .then(function () {
-      res.sendStatus(200);
+    .then(function (reviews) {
+      if (reviews) {
+        res.send(reviews);
+      } else {
+        res.sendStatus(404);
+      }
     })
-    .catch(function (err) {
-      res.status(400).send(err);
-    });
 }
 
 
 function getBookUserReviews(req, res) {
-  userBookService.getBookUserReviews(req.params._id)
-    .then(function () {
-      res.sendStatus(200);
+  userBookService.getBookUserReviews(req)
+    .then(function (review) {
+      if (review) {
+        console.log("succ");
+        res.send(review);
+      } else {
+        console.log("error");
+        res.sendStatus(404);
+      }
     })
-    .catch(function (err) {
-      res.status(400).send(err);
-    });
 }

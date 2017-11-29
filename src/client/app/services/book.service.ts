@@ -24,8 +24,8 @@ export class BookService {
     return this.http.post(this.bookPrefix + '/books/add', book);
   }
 
-  updateBook(book: Book) {
-    return this.http.put(this.bookPrefix + '/books/' + book._id, book);
+  updateBook( _id: string, book: Book) {
+    return this.http.put(this.bookPrefix + '/books/' + _id, book);
   }
 
   deleteBook(_id: string) {

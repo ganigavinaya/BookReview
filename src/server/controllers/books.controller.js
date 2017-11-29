@@ -64,7 +64,7 @@ function getByTitle(req, res) {
 }
 
 function getById(req, res) {
-  console.log(""+req.params._id);
+
   bookService.getById(req.params._id)
     .then(function (book) {
       if (book) {
