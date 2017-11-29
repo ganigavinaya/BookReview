@@ -32,5 +32,8 @@ export class BookService {
     return this.http.delete(this.bookPrefix + '/books/' + _id);
   }
 
+  searchBook(_search: string) {
+    return this.http.get(this.bookPrefix + '/books/searchBook').map((response: Response) => response.json());
+  }
 
 }

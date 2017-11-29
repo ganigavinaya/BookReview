@@ -17,6 +17,7 @@ service.create = create;
 service.update = update;
 service.delete = _delete;
 service.getById = getById;
+service.searchBook = searchBook;
 
 module.exports = service;
 
@@ -57,7 +58,7 @@ function getByTitle(_title) {
 }
 
 function getById(_id) {
-
+  console.log("triggered uuuu");
   var deferred = Q.defer();
 
   db.books.findById(_id, function (err, book) {
@@ -67,9 +68,29 @@ function getById(_id) {
 
       deferred.resolve(_.omit(book, 'hash'));
     } else {
-      console.log("error");
+      console.log("error uuuu");
       deferred.resolve("book not found");
     }
+  });
+
+  return deferred.promise;
+}
+
+function searchBook(req) {
+
+  var deferred = Q.defer();
+
+  db.books.find(
+      {title:/Little/}
+      , function (err, book) {
+      if (err) deferred.reject(err.name + ': ' + err.message);
+
+
+      books = _.map(books, function (book) {
+        return book;
+      });
+
+      deferred.resolve(books);
   });
 
   return deferred.promise;

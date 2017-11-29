@@ -4,9 +4,10 @@ import {RegisterComponent} from './register/register.component';
 import {NgModule} from '@angular/core';
 import {HomeComponent} from './home/home.component';
 import {AuthGuard} from './guard/auth.guard';
-import {AddBookComponent} from "./home/add-book/add-book.component";
-import {BookListComponent} from "./home/book-list/book-list.component";
-import {BookReviewComponent} from "./home/book-review-detail/book-review.component";
+import {AddBookComponent} from './home/add-book/add-book.component';
+import {BookListComponent} from './home/book-list/book-list.component';
+import {BookReviewComponent} from './home/book-review-detail/book-review.component';
+import {FavoriteComponent} from './home/favorites/favorite.component';
 
 const appRoutes: Routes = [
   {
@@ -23,7 +24,9 @@ const appRoutes: Routes = [
       { path: '', component: BookListComponent },
       { path: 'addBook', component: AddBookComponent },
       { path: 'update/:id', component: AddBookComponent },
+      { path: 'fav', component: FavoriteComponent },
       { path: ':id', component: BookReviewComponent }
+
     ]
   },
   {

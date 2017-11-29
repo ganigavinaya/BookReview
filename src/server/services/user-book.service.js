@@ -67,7 +67,7 @@ function create(reviewParam) {
   var set = {
     bookId: reviewParam.bookId,
     userId: reviewParam.userId,
-    //rating: reviewParam.rating,
+    rating: reviewParam.rating,
     review: reviewParam.review
   };
 

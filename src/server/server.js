@@ -27,6 +27,7 @@ app.use(bodyParser.json());
 app.use('/users', require('./controllers/users.controller'));
 app.use('/books', require('./controllers/books.controller'));
 app.use('/userbook', require('./controllers/user-book.controller'));
+app.use('/fav', require('./controllers/fav.controller'));
 // start server
 var port = process.env.NODE_ENV === 'production' ? 80 : 4000;
 var server = app.listen(4000,  function () {

@@ -11,6 +11,7 @@ import {Book} from '../../models/book';
 export class BookListComponent implements OnInit {
 
   booklist: Book[];
+  search = '';
   constructor (private route: ActivatedRoute,
                private router: Router,
                private bookservice: BookService) {}
@@ -34,6 +35,30 @@ export class BookListComponent implements OnInit {
       .subscribe(
         data => {
           console.log('Success');
+          this.booklist = data;
+          console.log(this.booklist);
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  onSearch() {
+    // this.bookservice.searchBook(this.search)
+    //   .subscribe(
+    //     data => {
+    //       console.log('Success');
+    //       this.booklist = data;
+    //       console.log(this.booklist);
+    //     },
+    //     error => {
+    //       console.log(error);
+    //     });
+
+    this.bookservice.searchBook(this.search)
+      .subscribe(
+        data => {
+          console.log('Success from onSEarch');
           this.booklist = data;
           console.log(this.booklist);
         },

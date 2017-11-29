@@ -10,6 +10,7 @@ router.put('/:_id', update);
 router.delete('/:_id', _delete);
 router.get('/title:_title', getByTitle);
 router.get('/:_id', getById);
+router.get('/searchBook', searchBook);
 
 module.exports = router;
 
@@ -66,6 +67,17 @@ function getByTitle(req, res) {
 function getById(req, res) {
 
   bookService.getById(req.params._id)
+    .then(function (book) {
+      if (book) {
+        res.send(book);
+      } else {
+        res.sendStatus(404);
+      }
+    });
+}
+function searchBook(req, res) {
+  console.log('searchBook');
+  bookService.searchBook(req)
     .then(function (book) {
       if (book) {
         res.send(book);

@@ -24,6 +24,7 @@ import {UserBookService} from './services/user-book.service';
 import {AllReviewComponent} from './home/book-review-detail/all-review/all-review.component';
 import {SingleReviewComponent} from './home/book-review-detail/all-review/single-review/single-review.component';
 import {PasswordStrengthBarModule} from 'ng2-password-strength-bar';
+import {FavoriteComponent} from "./home/favorites/favorite.component";
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import {PasswordStrengthBarModule} from 'ng2-password-strength-bar';
     BookComponent,
     BookReviewComponent,
     AllReviewComponent,
-    SingleReviewComponent
+    SingleReviewComponent,
+    FavoriteComponent
   ],
   imports: [
     BrowserModule,

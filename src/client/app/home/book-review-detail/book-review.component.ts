@@ -1,10 +1,11 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BookService} from '../../services/book.service';
 import {Book} from '../../models/book';
 import {UserBookService} from '../../services/user-book.service';
 import {UserBook} from '../../models/user-book';
 import {ReviewRequest} from '../../models/reviewRequest';
+import {AllReviewComponent} from './all-review/all-review.component';
 
 @Component({
   selector: 'app-book-review',
@@ -15,7 +16,8 @@ export class BookReviewComponent implements OnInit {
 
   book: Book;
   reviewInst: UserBook;
-  @Output() reviewAdded = new EventEmitter<void>();
+  @ViewChild(AllReviewComponent)
+  private allreview: AllReviewComponent;
 
   allowAdd = false;
   constructor (private route: ActivatedRoute,
@@ -55,11 +57,16 @@ export class BookReviewComponent implements OnInit {
 
 
   addReview() {
+    if (this.reviewInst.rating > 5) {
+      this.reviewInst.rating = 5;
+    } else if (this.reviewInst.rating < 0) {
+      this.reviewInst.rating = 0;
+    }
     this.userbookservice.addReview( this.reviewInst ).subscribe(
       data => {
        console.log('review added');
         this.allowAdd = false;
-        this.reviewAdded.emit();
+        this.allreview.reloadData();
         // const req: ReviewRequest = {bookId: this.reviewInst.bookId, userId : this.reviewInst.userId};
         // this.userbookservice.getBookUserReviews(req).subscribe(
         //   data1 => {
@@ -76,6 +83,8 @@ export class BookReviewComponent implements OnInit {
         console.log('error');
       }
     );
+
+
   }
 
 
