@@ -17,7 +17,6 @@ export class BookService {
   }
 
   getBookByID(_id: string) {
-    console.log('called getBookByID');
     return this.http.get(this.bookPrefix + '/books/' + _id).map((response: Response) => response.json());
   }
 

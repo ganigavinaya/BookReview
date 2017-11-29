@@ -27,9 +27,9 @@ function getAll() {
   db.books.find().toArray(function (err, books) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
-    // return users (without hashed passwords)
+
     books = _.map(books, function (book) {
-      return _.omit(book, 'hash');
+      return book;
     });
 
     deferred.resolve(books);
@@ -58,20 +58,17 @@ function getByTitle(_title) {
 
 function getById(_id) {
 
-  console.log(_id);
   var deferred = Q.defer();
 
   db.books.findById(_id, function (err, book) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
     if (book) {
-      console.log(_.omit(book, 'hash'));
-      // return user (without hashed password)
+
       deferred.resolve(_.omit(book, 'hash'));
     } else {
-      // user not found
       console.log("error");
-      deferred.resolve();
+      deferred.resolve("book not found");
     }
   });
 
@@ -93,8 +90,8 @@ function create(bookParam) {
       title: bookParam.title,
       authors: bookParam.authors,
       genre: bookParam.genre,
-      desc:bookParam.desc
-      //imageName: bookParam.imageName
+      desc:bookParam.desc,
+      image: bookParam.image
     };
 
     console.log(bookParam);

@@ -29,5 +29,17 @@ export class BookListComponent implements OnInit{
         });
   }
 
+  reloadData() {
+    this.bookservice.getAllBooks()
+      .subscribe(
+        data => {
+          console.log('Success');
+          this.booklist = data;
+          console.log(this.booklist);
+        },
+        error => {
+          console.log(error);
+        });
+  }
 
 }

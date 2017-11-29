@@ -5,8 +5,8 @@ var userBookService = require('services/user-book.service');
 
 // routes
 router.post('/add', add);
-router.put('/user/:_id', getBookUserReviews);
-router.delete('/:_id', getAllReviewsForBook);
+router.get('/user/:_id', getBookUserReviews);
+router.get('/:_id', getAllReviewsForBook);
 
 module.exports = router;
 
@@ -21,7 +21,7 @@ function add(req, res) {
 }
 
 function getAllReviewsForBook(req, res) {
-  userBookService.getAllReviewsForBook(req.params._id, req.body)
+  userBookService.getAllReviewsForBook(req.params._id)
     .then(function () {
       res.sendStatus(200);
     })
@@ -32,7 +32,7 @@ function getAllReviewsForBook(req, res) {
 
 
 function getBookUserReviews(req, res) {
-  userBookService.getBookUserReviews(req.params._id, req.body)
+  userBookService.getBookUserReviews(req.params._id)
     .then(function () {
       res.sendStatus(200);
     })

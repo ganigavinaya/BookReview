@@ -22,7 +22,8 @@ const appRoutes: Routes = [
     path: 'home', component: HomeComponent, canActivate: [AuthGuard], children: [
       { path: '', component: BookListComponent },
       { path: 'addBook', component: AddBookComponent },
-      { path: 'book/:id', component: BookReviewComponent }
+      { path: 'update/:id', component: AddBookComponent },
+      { path: ':id', component: BookReviewComponent }
     ]
   },
   {

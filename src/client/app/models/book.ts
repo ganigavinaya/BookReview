@@ -3,7 +3,7 @@ export class Book {
   title: string;
   authors: string;
   genre: string;
-  //image: File;
+  image: string|any;
   //imagePath: string;
   desc: string;
 }

@@ -8,7 +8,7 @@ import {Book} from '../../models/book';
   templateUrl: './book-review.component.html',
   styleUrls: ['./book-review.component.css']
 })
-export class BookReviewComponent implements OnInit{
+export class BookReviewComponent implements OnInit {
 
   book: Book;
   id: string;
@@ -18,8 +18,7 @@ export class BookReviewComponent implements OnInit{
 
 
   ngOnInit() {
-    console.log("start");
-    this.id = location.pathname.split('/')[3];
+    this.id = location.pathname.split('/')[2];
     this.bookservice.getBookByID(this.id).subscribe(
       data => {
         this.book = data;

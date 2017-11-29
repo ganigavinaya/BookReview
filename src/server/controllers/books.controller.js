@@ -64,11 +64,13 @@ function getByTitle(req, res) {
 }
 
 function getById(req, res) {
+  console.log(""+req.params._id);
   bookService.getById(req.params._id)
-    .then(function () {
-      res.sendStatus(200);
+    .then(function (book) {
+      if (book) {
+        res.send(book);
+      } else {
+        res.sendStatus(404);
+      }
     })
-    .catch(function (err) {
-      res.status(400).send(err);
-    });
 }

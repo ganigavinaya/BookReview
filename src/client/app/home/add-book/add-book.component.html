@@ -1,30 +1,30 @@
 <div class="container">
   <div class="col-md-offset-2 col-md-8 text-center" >
     <div class="form-area">
-      <form role="form">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <br style="clear:both">
-        <h3 style="margin-bottom: 25px; text-align: center;">Add Books</h3>
+        <h3 style="margin-bottom: 25px; text-align: center;">{{pageTitle}}</h3>
         <div class="form-group">
-          <input type="text" class="form-control" id="title" name="title" placeholder="Book Title" required [(ngModel)]="bookdata.title">
+          <input type="text" class="form-control" id="title" name="title" formControlName="title" placeholder="Book Title" required>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" id="authors" name="authors" placeholder="Authors (comma separated if more than one)" required [(ngModel)]="bookdata.authors">
+          <input type="text" class="form-control" id="authors" name="authors" formControlName="authors"  placeholder="Authors (comma separated if more than one)" required>
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" id="genre" name="genre" placeholder="Genre (comma separated if more than one)" required [(ngModel)]="bookdata.genre">
+          <input type="text" class="form-control" id="genre" name="genre" formControlName="genre" placeholder="Genre (comma separated if more than one)" required>
         </div>
         <div class="form-group">
-          <textarea class="form-control" id="desc" name="desc" required [(ngModel)]="bookdata.desc" placeholder="Add a description"></textarea>
+          <textarea class="form-control" id="desc" name="desc" formControlName="desc" placeholder="Book Description"></textarea>
         </div>
-        <image-upload
-          [buttonCaption]="'Select Images!'"
-          [extensions]="['jpg','png','gif']"
-          (uploadFinished)="onUploadFinished($event)"
-          >
-        </image-upload>
+        <div class="form-group">
+          <label for="image"class="pull-left" >Book Thumbnail</label>
+          <input type="file" id="image" class="form-control" (change)="onFileChange($event)" #fileInput>
+          <br>
+          <button type="button" class="btn btn-danger pull-left" (click)="clearFile()">clear file</button>
+        </div>
         <br>
         <div class="form-group col-md-12 text-center">
-          <button type="button" id="submit" name="submit" class="btn btn-primary " (click)="onSave()">Add Book</button>
+          <button type="submit" [disabled]="loading" class="btn btn-success">Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
         </div>
         <div class="form-group" id="error" style="color: red">
         </div>
