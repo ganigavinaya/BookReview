@@ -8,7 +8,7 @@ import {Book} from '../../models/book';
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css']
 })
-export class BookListComponent implements OnInit{
+export class BookListComponent implements OnInit {
 
   booklist: Book[];
   constructor (private route: ActivatedRoute,

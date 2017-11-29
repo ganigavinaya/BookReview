@@ -21,18 +21,19 @@ module.exports = service;
 function getAllReviewsForBook(_id) {
   var deferred = Q.defer();
 
-  db.reviews.find({
-      bookId:_id
-    }
-    , function (err, reviews) {
-      if (err) deferred.reject(err.name + ': ' + err.message);
+  db.reviews.find(
+    {bookId:_id}
+  ).toArray(function (err, books) {
+    if (err) deferred.reject(err.name + ': ' + err.message);
 
-      reviews = _.map(reviews, function (review) {
-        return review;
-      });
 
-      deferred.resolve(reviews);
+    books = _.map(books, function (book) {
+      return book;
     });
+
+    deferred.resolve(books);
+  });
+
   return deferred.promise;
 }
 
@@ -48,12 +49,12 @@ function getBookUserReviews(req) {
     ,
     function (err, review) {
       if (err) deferred.reject(err.name + ': ' + err.message);
-
-
       if (review) {
-        deferred.resolve(review);
+
+        deferred.resolve(_.omit(review, 'hash'));
       } else {
-        deferred.reject('review not found');
+        console.log("error");
+        deferred.resolve("book not found");
       }
     });
   return deferred.promise;

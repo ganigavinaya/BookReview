@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserBook} from '../../../../models/user-book';
+import {UserService} from '../../../../services/user.service';
+import {User} from '../../../../models/user';
 
 @Component({
   selector: 'app-single-review',
@@ -10,11 +12,22 @@ import {UserBook} from '../../../../models/user-book';
 export class SingleReviewComponent implements OnInit {
 
   @Input() review: UserBook;
-
+  user: User = {_id : '', name: '', email: '', username: '', password: ''};
   constructor(private route: ActivatedRoute,
-              private router: Router) {}
+              private router: Router,
+              private userservice: UserService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+    this.userservice.getUserById(this.review.userId).subscribe(
+      data => {
+        this.user = data;
+      },
+      error => {
+        console.log('error');
+      }
+    );
+  }
 
 
 

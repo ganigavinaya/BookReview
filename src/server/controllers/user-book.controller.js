@@ -36,7 +36,6 @@ function getBookUserReviews(req, res) {
   userBookService.getBookUserReviews(req)
     .then(function (review) {
       if (review) {
-        console.log("succ");
         res.send(review);
       } else {
         console.log("error");

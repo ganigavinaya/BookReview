@@ -28,6 +28,18 @@ export class AllReviewComponent implements OnInit {
     );
   }
 
+  reloadData() {
+    this.userbookservice.getAllReviewsForBook(this.bookId).subscribe(
+      data => {
+        this.allReview = data;
+      },
+      error => {
+        console.log('error');
+      }
+    );
+
+  }
+
 
 
 

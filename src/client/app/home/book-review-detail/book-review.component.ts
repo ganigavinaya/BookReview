@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BookService} from '../../services/book.service';
 import {Book} from '../../models/book';
@@ -15,6 +15,7 @@ export class BookReviewComponent implements OnInit {
 
   book: Book;
   reviewInst: UserBook;
+  @Output() reviewAdded = new EventEmitter<void>();
 
   allowAdd = false;
   constructor (private route: ActivatedRoute,
@@ -38,12 +39,11 @@ export class BookReviewComponent implements OnInit {
         console.log('error');
       }
     );
-    console.log('before');
+
     const req: ReviewRequest = {bookId: this.reviewInst.bookId, userId : this.reviewInst.userId};
     this.userbookservice.getBookUserReviews(req).subscribe(
       data => {
         this.reviewInst = data;
-        console.log('data'+data);
         this.allowAdd = false;
       },
       error => {
@@ -55,11 +55,11 @@ export class BookReviewComponent implements OnInit {
 
 
   addReview() {
-    console.log(this.reviewInst);
     this.userbookservice.addReview( this.reviewInst ).subscribe(
       data => {
        console.log('review added');
-
+        this.allowAdd = false;
+        this.reviewAdded.emit();
         // const req: ReviewRequest = {bookId: this.reviewInst.bookId, userId : this.reviewInst.userId};
         // this.userbookservice.getBookUserReviews(req).subscribe(
         //   data1 => {
