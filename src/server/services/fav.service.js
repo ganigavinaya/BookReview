@@ -12,13 +12,14 @@ var service = {};
 service.setFav = setFav;
 service.getAllForUser = getAllForUser;
 service.getOneForUser = getOneForUser;
+service.delete = _delete;
 
 
 module.exports = service;
 
 
 function setFav(userParam) {
-
+  var deferred = Q.defer();
   var user = {
     bookId: userParam.bookId,
     userId: userParam.userId
@@ -39,9 +40,7 @@ function setFav(userParam) {
 function getAllForUser(_id) {
   var deferred = Q.defer();
 
-  db.favorites.find(
-    {userId:_id}
-  ).toArray(function (err, favs) {
+  db.favorites.find( {userId:_id} ).toArray(function (err, favs) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
 
@@ -53,6 +52,7 @@ function getAllForUser(_id) {
   });
 
   return deferred.promise;
+
 }
 
 
@@ -65,15 +65,31 @@ function getOneForUser(req) {
       userId:req.param('userId')
     },
     function (err, fav) {
-    if (err) deferred.reject(err.name + ': ' + err.message);
-    if (fav) {
+      if (err) deferred.reject(err.name + ': ' + err.message);
+      if (fav) {
 
-      deferred.resolve(_.omit(fav, 'hash'));
-    } else {
-      console.log("error");
-      deferred.resolve("fav not found");
-    }
-  });
+        deferred.resolve(_.omit(fav, 'hash'));
+      } else {
+        console.log("error");
+        deferred.resolve("fav not found");
+      }
+    });
 
   return deferred.promise;
 }
+
+function _delete(req) {
+  var deferred = Q.defer();
+
+  db.favorites.remove(
+    { bookId:req.param('bookId'),
+      userId:req.param('userId')},
+    function (err) {
+      if (err) deferred.reject(err.name + ': ' + err.message);
+
+      deferred.resolve();
+    });
+
+  return deferred.promise;
+}
+

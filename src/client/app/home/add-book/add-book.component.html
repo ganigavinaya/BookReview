@@ -28,18 +28,21 @@
                 <img *ngIf="loading" src="data:image/JPEG;base64,{{image.value}}"/>
               </div>
             </div>
-            <div class="col-xs-6">
-              <div class="row">
-                <div class="col-xs-12"><br><br></div>
-              </div>
-              <div class="row">
-                <button type="button" class="btn btn-danger pull-left" (click)="clearFile()">clear file</button>
-                <button type="submit" class="btn btn-success">Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
-              </div>
-              <div class="row">
-                <div class="col-xs-12">&nbsp;</div>
-              </div>
-
+          </div>
+          <br>
+          <br>
+          <div class="row">
+            <div class="col-xs-2 form-group">
+              <button type="button" class="btn btn-danger pull-left" (click)="clearFile()">clear file</button>
+            </div>
+            <div class="col-xs-2">
+            <br>
+            </div>
+            <div class="col-xs-3">
+              <button type="submit" class="btn btn-success">Submit <i class="fa fa-spinner fa-spin fa-fw" *ngIf="loading"></i></button>
+            </div>
+            <div class="col-xs-3">
+              <button type="button" class="btn btn-warning pull right" routerLink="/home">Go back</button>
             </div>
           </div>
         </div>

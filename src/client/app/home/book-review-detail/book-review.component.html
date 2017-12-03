@@ -20,18 +20,23 @@
     </div>
     <div class="row">
       <div class="col-xs-4">
-        <label for="review">Your Rating</label>
-        <input class="form-control" type="number" min="0" max="5" [(ngModel)]="reviewInst.rating">
+        <label for="rating">Your Rating</label>
+        <div class="col-xs-7">
+          <input *ngIf="allowAdd; else elseBlock" id="rating" class="form-control" type="number" min="0" max="5" [(ngModel)]="reviewInst.rating" (change)="checkRating()">
+          <ng-template #elseBlock class="form-control"><br>{{reviewInst.rating}}</ng-template>
+        </div>
       </div>
       <div class="col-xs-2">
         <label for="review">Favorite</label>
-        <input type="checkbox" [(ngModel)]="favorite">
+        <input type="checkbox" id="fav" [(ngModel)]="favorite" (click)="changeFav($event)">
       </div>
     </div>
     <br>
     <div class="row">
       <div class="col-xs-10">
-        <textarea id="review" class="form-control" rows="5" [(ngModel)]="reviewInst.review" placeholder="Add Review">{{reviewInst.review}}</textarea>
+        <label for="rating">Your Review</label>
+        <textarea *ngIf="allowAdd; else pReview" id="review" class="form-control" rows="5" [(ngModel)]="reviewInst.review" placeholder="Add Review">{{reviewInst.review}}</textarea>
+        <ng-template #pReview class="form-control"><p>{{reviewInst.review}}</p></ng-template>
       </div>
     </div>
     <br>

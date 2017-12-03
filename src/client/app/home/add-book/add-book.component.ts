@@ -123,6 +123,7 @@ export class AddBookComponent implements OnInit{
   clearFile() {
     this.form.get('image').setValue(null);
     this.fileInput.nativeElement.value = '';
+    this.loading = false;
   }
 
 }

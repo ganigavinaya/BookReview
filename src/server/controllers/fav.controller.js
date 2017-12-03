@@ -7,10 +7,12 @@ var favService = require('services/fav.service.js');
 router.get('/', getOneForUser);
 router.post('/add', setFav);
 router.get('/:_id', getAllForUser);
+router.delete('/',deleteFav);
 
 module.exports = router;
 
 function getAllForUser(req, res) {
+
   favService.getAllForUser(req.params._id)
     .then(function (favs) {
       res.send(favs);
@@ -33,6 +35,17 @@ function getOneForUser(req, res) {
 
 function setFav(req, res) {
   favService.setFav(req.body)
+    .then(function () {
+      res.sendStatus(200);
+    })
+    .catch(function (err) {
+      res.status(400).send(err);
+    });
+}
+
+
+function deleteFav(req, res) {
+  favService.delete(req)
     .then(function () {
       res.sendStatus(200);
     })

@@ -23,4 +23,8 @@ export class FavService {
     return this.http.get(this.bookPrefix + '/fav?userId=' + userId + '&bookId=' + bookId).map((response: Response) => response.json());
   }
 
+  delFav(userId: string, bookId: string) {
+    return this.http.delete(this.bookPrefix + '/fav?userId=' + userId + '&bookId=' + bookId);
+  }
+
 }

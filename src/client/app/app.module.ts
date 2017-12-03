@@ -54,7 +54,7 @@ import {FavService} from "./services/fav.service";
     StarRatingModule.forRoot(),
     PasswordStrengthBarModule
   ],
-  providers: [FormBuilder, UserService, AuthGuard, BookService, UserBookService],
+  providers: [FormBuilder, UserService, AuthGuard, BookService, UserBookService, FavService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

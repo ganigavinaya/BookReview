@@ -6,6 +6,8 @@ import {UserBookService} from '../../services/user-book.service';
 import {UserBook} from '../../models/user-book';
 import {ReviewRequest} from '../../models/reviewRequest';
 import {AllReviewComponent} from './all-review/all-review.component';
+import {FavService} from '../../services/fav.service';
+import {Fav} from '../../models/fav';
 
 @Component({
   selector: 'app-book-review',
@@ -16,6 +18,7 @@ export class BookReviewComponent implements OnInit {
 
   book: Book;
   favorite: boolean;
+  favObj: Fav = {_id: '', userId: '', bookId: ''};
   reviewInst: UserBook;
   @ViewChild(AllReviewComponent)
   private allreview: AllReviewComponent;
@@ -24,14 +27,15 @@ export class BookReviewComponent implements OnInit {
   constructor (private route: ActivatedRoute,
                private router: Router,
                private bookservice: BookService,
-               private userbookservice: UserBookService) {}
+               private userbookservice: UserBookService,
+               private favservice: FavService) {}
 
 
   ngOnInit() {
 
     this.reviewInst = {_id : '', userId: JSON.parse(localStorage.getItem('currentUser'))._id,
       bookId: location.pathname.split('/')[2],
-      rating: 5,
+      rating: null,
       review: ''};
 
     this.bookservice.getBookByID(this.reviewInst.bookId).subscribe(
@@ -51,19 +55,19 @@ export class BookReviewComponent implements OnInit {
       },
       error => {
         this.allowAdd = true;
-        console.log('error');
+        console.log('no review');
       }
     );
 
-    // this.favservice.getOneForUser(this.reviewInst.userId, this.reviewInst.bookId).subscribe(
-    //   data => {
-    //     this.favorite = true;
-    //   },
-    //   error => {
-    //     this.favorite = true;
-    //     console.log('error');
-    //   }
-    // );
+    this.favservice.getOneForUser(this.reviewInst.userId, this.reviewInst.bookId).subscribe(
+      data => {
+        this.favorite = true;
+      },
+      error => {
+        this.favorite = false;
+        console.log('not fav');
+      }
+    );
   }
 
 
@@ -78,16 +82,6 @@ export class BookReviewComponent implements OnInit {
        console.log('review added');
         this.allowAdd = false;
         this.allreview.reloadData();
-        // const req: ReviewRequest = {bookId: this.reviewInst.bookId, userId : this.reviewInst.userId};
-        // this.userbookservice.getBookUserReviews(req).subscribe(
-        //   data1 => {
-        //     this.reviewInst = data1;
-        //   },
-        //   error => {
-        //     this.allowAdd = true;
-        //     console.log('error');
-        //   }
-        // );
       },
       error => {
         this.allowAdd = true;
@@ -95,7 +89,41 @@ export class BookReviewComponent implements OnInit {
       }
     );
 
+  }
 
+  changeFav($event) {
+
+    if ($event.target.checked) {
+
+      this.favObj.userId = this.reviewInst.userId;
+      this.favObj.bookId = this.reviewInst.bookId;
+      this.favservice.addFav(this.favObj).subscribe(
+        data => {
+          // this.favorite = true;
+        },
+        error => {
+          this.favorite = false;
+          console.log('error');
+        }
+      );
+    } else {
+      this.favservice.delFav(this.reviewInst.userId, this.reviewInst.bookId).subscribe(
+        data => {
+          // this.favorite = false;
+        },
+        error => {
+          console.log('error');
+        }
+      );
+    }
+  }
+
+  checkRating() {
+    if (this.reviewInst.rating > 5 ) {
+      this.reviewInst.rating = 5;
+    } else if ( this.reviewInst.rating < 0) {
+      this.reviewInst.rating = 0;
+    }
   }
 
 
