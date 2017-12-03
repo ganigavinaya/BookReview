@@ -51,7 +51,7 @@ export class BookListComponent implements OnInit {
           console.log(error);
         });
   }
-
+  
   onSearch() {
 
     this.bookservice.searchBook(this.search)
