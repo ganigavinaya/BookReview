@@ -21,6 +21,12 @@ export class RegisterComponent {
       return false;
     }
 
+    const pattern = new RegExp(/^([\w-\.]+@([\w-\.]+))?$/);
+    if ( !pattern.test(this.userdata.email)) {
+      document.getElementById('error').innerText = 'Enter valid email address';
+      return false;
+    }
+
     const p = this.userdata.password;
     let _force = 0;
     const _regex = /[$-/:-?{-~!"^_`\[\]]/g; // "
