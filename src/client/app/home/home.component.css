@@ -1,0 +1,45 @@
+.bg-overlay {
+  background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url("img/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  //color: #9d9d9d;
+  color: burlywood;
+  height: 250px;
+  left: 0;
+  right: 0;
+  width:100%;
+  font-family: papyrus;
+}
+
+
+.body-content {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 50px;
+  bottom: 30px;
+  width: 100%;
+  overflow-y: auto;
+  font-family: x-locale-heading-primary,zillaslab,Palatino,"Palatino Linotype",x-locale-heading-secondary,serif;
+}
+header {
+  font-family: papyrus;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 50px;
+}
+footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #292b2c;
+  color: #fff;
+  line-height: 300%;
+  height: 40px;
+  font-family: cursive;
+}
+

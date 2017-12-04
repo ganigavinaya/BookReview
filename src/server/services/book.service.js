@@ -18,6 +18,7 @@ service.update = update;
 service.delete = _delete;
 service.getById = getById;
 service.searchBook = searchBook;
+service.searchFilter = searchFilter;
 
 module.exports = service;
 
@@ -96,6 +97,37 @@ function searchBook(req) {
 
         deferred.resolve(books);
   });
+
+  return deferred.promise;
+}
+
+
+function searchFilter(req) {
+
+  var deferred = Q.defer();
+
+  word = req.param('search');
+  genre = req.param('genre');
+  db.books.find({
+    $and: [
+      {genre: {'$regex': genre}},
+      {$or:
+        [
+          {title: {'$regex': word}},
+          {authors: {'$regex': word}}
+        ]}
+    ]
+  })
+    .toArray(function (err, books) {
+      if (err) deferred.reject(err.name + ': ' + err.message);
+
+
+      books = _.map(books, function (book) {
+        return book;
+      });
+
+      deferred.resolve(books);
+    });
 
   return deferred.promise;
 }

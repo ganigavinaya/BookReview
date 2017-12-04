@@ -14,10 +14,14 @@ export class BookListComponent implements OnInit {
   search = '';
   newArray: Book[];
   currentPage = 0;
-  pageSize = 1;
+  pageSize = 5;
   numberOfPages = 1;
   nextDis = false;
   prevDis = false;
+  genreSelected = '';
+  btnClass = 'btn-default';
+  genreList = ['Young Adult', 'Mystery' , 'Romance' , 'Classic' , 'Fiction' , 'Chick-lit' ,
+    'Thriller' , 'Humor' , 'Fantasy' , 'Contemporary'];
   constructor (private route: ActivatedRoute,
                private router: Router,
                private bookservice: BookService) {}
@@ -29,8 +33,13 @@ export class BookListComponent implements OnInit {
         data => {
           console.log('Success');
           this.booklist = data;
-          console.log(this.booklist);
           this.numberOfPages = this.calculateNumberOfPages();
+          if (this.numberOfPages <= 1 ) {
+            this.nextDis = true;
+          } else {
+            this.nextDis = false;
+          }
+          this.prevDis = true;
           this.startFrom();
         },
         error => {
@@ -39,31 +48,88 @@ export class BookListComponent implements OnInit {
   }
 
   reloadData() {
+    this.genreSelected = '';
+    this.search = '';
+    document.getElementById('filtername').innerText = this.genreSelected;
     this.bookservice.getAllBooks()
       .subscribe(
         data => {
           console.log('Success');
           this.booklist = data;
-          console.log(this.booklist);
           this.numberOfPages = this.calculateNumberOfPages();
+          console.log(this.numberOfPages);
+          this.currentPage = 0;
+          if (this.numberOfPages <= 1 ) {
+            this.nextDis = true;
+          } else {
+            this.nextDis = false;
+          }
+          this.prevDis = true;
+          this.startFrom();
         },
         error => {
           console.log(error);
         });
   }
-  
-  onSearch() {
 
-    this.bookservice.searchBook(this.search)
-      .subscribe(
-        data => {
-          console.log('Success from onSEarch');
-          this.booklist = data;
-          console.log(this.booklist);
-        },
-        error => {
-          console.log(error);
-        });
+  onSearch() {
+    console.log('search :' + this.search);
+    console.log('genre :' + this.genreSelected);
+    if (this.genreSelected === '' || (this.search === '' && this.genreSelected !== '')) {
+      if (this.search === '') {
+        this.search = this.genreSelected;
+      }
+      this.bookservice.searchBook(this.search)
+        .subscribe(
+          data => {
+            console.log('Success from onSearch');
+            this.booklist = data;
+            this.numberOfPages = this.calculateNumberOfPages();
+            this.currentPage = 0;
+            if (this.numberOfPages <= 1 ) {
+              this.nextDis = true;
+            } else {
+              this.nextDis = false;
+            }
+            this.prevDis = true;
+            this.startFrom();
+          },
+          error => {
+            console.log(error);
+          });
+    } else {
+      this.bookservice.searchBookWithFilter(this.search, this.genreSelected)
+        .subscribe(
+          data => {
+            console.log('Success from searchBookWithFilter');
+            this.booklist = data;
+            this.numberOfPages = this.calculateNumberOfPages();
+            this.currentPage = 0;
+            if (this.numberOfPages <= 1 ) {
+              this.nextDis = true;
+            } else {
+              this.nextDis = false;
+            }
+            this.prevDis = true;
+            this.startFrom();
+          },
+          error => {
+            console.log(error);
+          });
+    }
+
+  }
+
+  filterSelected($event) {
+    if ($event.target.nodeName === 'A' ) {
+      this.genreSelected = $event.target.id;
+
+      if ( this.genreList.includes(this.search)) {
+        this.search = '';
+      }
+      document.getElementById('filtername').innerText = this.genreSelected;
+    }
+
   }
 
   calculateNumberOfPages() {
@@ -71,30 +137,32 @@ export class BookListComponent implements OnInit {
   }
 
   decreaseCurrentPage() {
-    if (this.currentPage <= 1) {
-      this.prevDis = true;
-    } else {
-      this.nextDis = false;
-      this.currentPage = this.currentPage - 1;
+    this.nextDis = false;
+    this.currentPage = this.currentPage - 1;
 
-      this.startFrom();
+    this.startFrom();
+
+    if (this.currentPage <= 0) {
+      this.prevDis = true;
     }
+
   }
 
   increaseCurrentPage() {
-    if (this.currentPage >= this.numberOfPages - 1) {
-      this.nextDis = true;
-    } else {
+
       this.prevDis = false;
       this.currentPage = this.currentPage + 1;
 
       this.startFrom();
-    }
+      if (this.currentPage >= this.numberOfPages - 1) {
+        this.nextDis = true;
+      }
+
   }
 
   startFrom() {
     const temp = this.pageSize * this.currentPage;
-    this.newArray = this.booklist.slice(this.pageSize * this.currentPage, this.pageSize + temp);
-    console.log(this.newArray.length);
+    this.newArray = this.booklist.slice(temp, this.pageSize + temp);
+    console.log(this.newArray);
   }
 }

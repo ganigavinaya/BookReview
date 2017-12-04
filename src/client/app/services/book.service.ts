@@ -36,4 +36,9 @@ export class BookService {
     return this.http.get(this.bookPrefix + '/books/searchBook?search=' + _search).map((response: Response) => response.json());
   }
 
+  searchBookWithFilter(_search: string, genre: string) {
+    return this.http.get(this.bookPrefix + '/books/searchFilter?search=' + _search + '&genre=' + genre)
+      .map((response: Response) => response.json());
+  }
+
 }

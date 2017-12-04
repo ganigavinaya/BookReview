@@ -1,36 +1,57 @@
 <div class="row">
   <div class="col-xs-12 text-center">
-    <h2>Book List</h2>
+    <br>
   </div>
 </div>
-<hr>
 <div class="row">
-  <div class="col-xs-offset-1 col-sm-6 col-md-6">
-      <div class="input-group">
+  <div class="col-xs-12">
+    <div class="col-xs-9 col-xs-offset-3 input-group">
+      <div class="col-xs-5">
         <input type="text" class="form-control" placeholder="Search" [(ngModel)]="search">
-        <div class="input-group-btn">
-          <button class="btn btn-default" type="button" (click)="onSearch()"><i class="glyphicon glyphicon-search"></i></button>
-        </div>
-        <div>&nbsp;</div>
-        <div class="input-group-btn">
-          <button class="btn btn-danger" type="button" (click)="reloadData()">Clear Search</button>
+      </div>
+      <div class="col-xs-3">
+        <div class="dropdown" appDropdown>
+          <button type="button" id="filter" class="btn btn-default" [ngClass]="genreSelected == ''? 'btn-default' : 'btn-primary'">
+            <span class="glyphicon glyphicon-filter"></span>&nbsp;<span id="filtername"></span>
+          </button>
+          <ul class="dropdown-menu" (click)="filterSelected($event)">
+            <li><a id="">No Filter</a></li>
+            <li *ngFor="let genre of genreList"><a id="{{genre}}">{{genre}}</a></li>
+          </ul>
         </div>
       </div>
+      <div class="col-xs-1">
+        <button class="btn btn-default" type="button" (click)="onSearch()"><i class="glyphicon glyphicon-search"></i></button>
+      </div>
+      <div class="col-xs-1">
+        <button class="btn btn-default" type="button" (click)="reloadData()">Clear</button>
+      </div>
+    </div>
+
   </div>
+
 </div>
 <hr>
-<br>
 <div class="row">
-<app-book *ngFor="let book of newArray" [book]="book" (bookDeleted)="reloadData()"></app-book>
-<div class="Button" align="center">
-  <button [disabled] = "prevDis" id="prev" name ="prev" (click) = "decreaseCurrentPage()">
-    Previous
-  </button>
-  {{currentPage + 1}} / {{numberOfPages}}
-  <button [disabled] = "nextDis" id="next" name="next" (click) = "increaseCurrentPage()">
-    Next
-  </button>
-</div>
-  <app-book *ngFor="let book of booklist" [book]="book" (bookDeleted)="reloadData()"></app-book>
-</div>
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <div class="btn-group">
+        <button class="btn btn-default" [disabled] = "prevDis" id="prev" name ="prev" (click) = "decreaseCurrentPage()">
+          Previous
+        </button>
+        <button class="btn btn-default disabled">
+          {{currentPage + 1}} / {{numberOfPages}}
+        </button>
+        <button class="btn btn-default" [disabled]="nextDis" id="next" name="next" (click) = "increaseCurrentPage()">
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <br>
+    <br>
+  </div>
+  <app-book *ngFor="let book of newArray" [book]="book" (bookDeleted)="reloadData()"></app-book>
 
+</div>
