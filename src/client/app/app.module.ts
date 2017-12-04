@@ -15,17 +15,15 @@ import {AuthGuard} from './guard/auth.guard';
 import {DropdownDirective} from './directives/dropdown.directive';
 import {AddBookComponent} from './home/add-book/add-book.component';
 import {BookListComponent} from './home/book-list/book-list.component';
-import { ImageUploadModule } from 'angular2-image-upload';
 import {BookService} from './services/book.service';
 import {BookComponent} from './home/book-list/book/book.component';
-import {StarRatingModule} from '../../../node_modules/angular-star-rating';
 import {BookReviewComponent} from './home/book-review-detail/book-review.component';
 import {UserBookService} from './services/user-book.service';
 import {AllReviewComponent} from './home/book-review-detail/all-review/all-review.component';
 import {SingleReviewComponent} from './home/book-review-detail/all-review/single-review/single-review.component';
 import {PasswordStrengthBarModule} from 'ng2-password-strength-bar';
-import {FavoriteComponent} from "./home/favorites/favorite.component";
-import {FavService} from "./services/fav.service";
+import {FavoriteComponent} from './home/favorites/favorite.component';
+import {FavService} from './services/fav.service';
 
 
 @NgModule({
@@ -50,8 +48,6 @@ import {FavService} from "./services/fav.service";
     HttpModule,
     FormsModule,
     ReactiveFormsModule,
-    ImageUploadModule.forRoot(),
-    StarRatingModule.forRoot(),
     PasswordStrengthBarModule
   ],
   providers: [FormBuilder, UserService, AuthGuard, BookService, UserBookService, FavService],
